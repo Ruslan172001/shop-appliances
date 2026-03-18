@@ -1,0 +1,201 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING       // Заказ создан, ждет оплаты
+  PAID          // Оплачен
+  PROCESSING    // Обрабатывается на складе
+  SHIPPED       // Отправлен
+  DELIVERED     // Доставлен
+  CANCELLED     // Отменен
+}
+
+// ---------------- MODELS ----------------
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String    // Хэш пароля
+  role          Role      @default(USER)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  orders        Order[]
+  reviews       Review[]
+  wishlist      Wishlist[]
+  
+  // Для сессий NextAuth (опционально, если будешь использовать адаптер)
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Category {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique // для URL /catalog/fridge
+  description String?
+  parentId    String?
+  parent      Category?   @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[]  @relation("CategoryHierarchy")
+  products    Product[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([slug])
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique // для URL /product/iphone-15
+  description String      @db.Text
+  price       Decimal     @db.Decimal(10, 2)
+  oldPrice    Decimal?    @db.Decimal(10, 2) // Для скидок
+  
+  // Характеристики товара (вес, габариты, мощность и т.д.)
+  // Храним как JSON, так как структура отличается для разных категорий
+  specifications Json?    
+
+  // Атрибуты из запроса
+  model       String?     // Модель (например, "XYZ-2000")
+  color       String?     // Цвет
+  country     String?     // Страна производитель
+  quantity    Int         @default(0) // Наличие на складе
+  
+  // Рейтинги
+  rating      Float       @default(0) // Средний рейтинг (кэшируем для производительности)
+  reviewCount Int         @default(0) // Количество отзывов
+
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  
+  images      ProductImage[]
+  reviews     Review[]
+  orderItems  OrderItem[]
+  wishlist    Wishlist[]
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([categoryId])
+  @@index([slug])
+  @@index([price])
+  @@index([rating])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?  // Alt текст для SEO
+  isMain    Boolean  @default(false) // Главное фото
+  order     Int      @default(0) // Порядок сортировки
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5
+  comment   String?  @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId]) // Пользователь может оставить только один отзыв на товар
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  total     Decimal     @db.Decimal(10, 2)
+  status    OrderStatus @default(PENDING)
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+  
+  // Информация о доставке (снимок на момент заказа)
+  address   String      @db.Text
+  phone     String
+  email     String
+  
+  // Платежная информация
+  paymentId String?     // ID транзакции платежной системы
+  paidAt    DateTime?
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  // Важно: сохраняем цену и название на момент покупки, 
+  // так как в будущем цена товара может измениться
+  price     Decimal  @db.Decimal(10, 2)
+  quantity  Int
+  name      String   //_snapshot_ названия товара
+  image     String?  // _snapshot_ картинки
+  
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Wishlist {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([userId, productId]) // Уникальная пара пользователь-товар
+}
+
+// ---------------- NEXTAUTH MODELS (Optional but recommended) ----------------
+// Если будешь использовать NextAuth с базой данных, эти таблицы нужны для OAuth (Google, GitHub)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
