@@ -1,4 +1,5 @@
 import { ArrowRight, Tag, Zap } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -39,7 +40,7 @@ export default function Hero() {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              href="/products?isSale=true"
+              href="/catalog?sale=true"
               className="border border-white/40 hover:bg-white/10 text-white px-8 py-3.5 rounded-xl flex items-center gap-2 transition-colors backdrop-blur-sm"
             >
               <Tag className="w-5 h-5 text-yellow-400" />
@@ -65,12 +66,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hidden lg:block w-80">
-          <img
-            src="https://images.unsplash.com/photo-1758488438758-5e2eedf769ce?w=500&q=80"
-            alt="Featured appliance"
-            className="rounded-2xl shadow-2xl w-full object-cover h-80"
-          />
+        <div className="hidden lg:block w-50">
+          <div className="bg-transparent rounded-lg p-1.5">
+            <Zap className="w-40 h-40 text-white" />
+          </div>
         </div>
       </div>
     </section>

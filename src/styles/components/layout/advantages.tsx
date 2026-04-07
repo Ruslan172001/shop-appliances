@@ -26,7 +26,7 @@ const advantages = [
     color: "bg-amber-50 text-amber-600",
   },
 ];
-export default function Advatages() {
+export default function Advantages() {
   return (
     <section className="bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 py-6">

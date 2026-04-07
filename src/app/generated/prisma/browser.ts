@@ -58,6 +58,16 @@ export type OrderItem = Prisma.OrderItemModel
  */
 export type Wishlist = Prisma.WishlistModel
 /**
+ * Model PromoCode
+ * 
+ */
+export type PromoCode = Prisma.PromoCodeModel
+/**
+ * Model CartItem
+ * 
+ */
+export type CartItem = Prisma.CartItemModel
+/**
  * Model Account
  * 
  */

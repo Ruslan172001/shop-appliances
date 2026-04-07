@@ -125,7 +125,7 @@ export default function HeaderAvatar({ onLogout }: HeaderAvatarProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile/orders">
+            <Link href="/profile?tab=orders">
               <ShoppingCartIcon className="mr-2 h-4 w-4" />
               <span>Заказы</span>
             </Link>

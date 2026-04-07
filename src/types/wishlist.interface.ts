@@ -14,7 +14,7 @@ export interface IWishlistState {
   items: IWishlistItem[];
 
   // Основные методы
-  addItem: (item: Omit<IWishlistItem, "addedAt">) => void;
+  addItemWishlist: (item: Omit<IWishlistItem, "addedAt">) => void;
   removeItem: (productId: string) => void;
   clearWishlist: () => void;
 

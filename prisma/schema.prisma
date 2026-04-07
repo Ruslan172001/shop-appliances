@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../src/app/generated/prisma"
 }
 
 datasource db {
@@ -44,6 +44,7 @@ model User {
   // Для сессий NextAuth (опционально, если будешь использовать адаптер)
   accounts      Account[]
   sessions      Session[]
+  cartItems CartItem[]
 }
 
 model Category {
@@ -98,6 +99,7 @@ model Product {
   @@index([slug])
   @@index([price])
   @@index([rating])
+  cartItems CartItem[]
 }
 
 model ProductImage {
@@ -171,6 +173,32 @@ model Wishlist {
   @@id([userId, productId]) // Уникальная пара пользователь-товар
 }
 
+model PromoCode {
+  id                String    @id @default(cuid())
+  code              String    @unique
+  type              String    // "PERCENT" или "FIXED"
+  value             Decimal   @db.Decimal(10, 2)
+  minOrderAmount    Decimal   @db.Decimal(10, 2)
+  maxDiscountAmount Decimal?  @db.Decimal(10, 2)
+  validFrom         DateTime  @default(now())
+  validUntil        DateTime
+  usageLimit        Int       @default(0)  // 0 = безлимит
+  usageCount        Int       @default(0)
+  isActive          Boolean   @default(true)
+  description       String?
+
+  @@index([code])
+}
+
+model CartItem {
+  userId String
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  productId String
+  product Product @relation(fields: [productId],references: [id],onDelete: Cascade)
+  quantity Int @default(1)
+
+  @@id([userId,productId])
+}
 // ---------------- NEXTAUTH MODELS (Optional but recommended) ----------------
 // Если будешь использовать NextAuth с базой данных, эти таблицы нужны для OAuth (Google, GitHub)
 model Account {

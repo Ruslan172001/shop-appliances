@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import "./globals.css";
+import "../styles/globals.css";
 import Header from "@/styles/components/layout/header";
-import AuthProvider from "@/components/providers/auth-provider";
+import AuthProvider from "@/styles/components/providers/auth-provider";
+import { Toaster } from "@/styles/components/ui/sonner";
+import { QueryProvider } from "@/styles/components/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +24,13 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${geistSans.variable} font-sans antialiased`}>
-        <AuthProvider>
-          <Header />
-          {children}
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
+        </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );

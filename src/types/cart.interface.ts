@@ -18,8 +18,8 @@ export interface ICart {
 }
 
 export interface ICartState {
+  addItemToCart: (item: Omit<ICartItem, "quantity">, quantity?: number) => void;
   items: ICartItem[];
-  addItem: (item: Omit<ICartItem, "quantity">, quantity?: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;

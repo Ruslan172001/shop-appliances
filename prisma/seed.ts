@@ -1,5 +1,9 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { OrderStatus, PrismaClient, Role } from "app/generated/prisma/client";
+import {
+  OrderStatus,
+  PrismaClient,
+  Role,
+} from "../src/app/generated/prisma/client";
 import bcrypt from "bcryptjs";
 import "dotenv/config";
 

@@ -17,8 +17,8 @@ import {
 } from "@/styles/components/ui/field";
 import { Input } from "@/styles/components/ui/input";
 import { useActionState } from "react";
-import { register } from "actions/auth";
 import Link from "next/link";
+import { register } from "@/actions/auth";
 
 export function RegisterForm({
   className,

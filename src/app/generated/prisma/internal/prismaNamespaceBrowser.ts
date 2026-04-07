@@ -59,6 +59,8 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Wishlist: 'Wishlist',
+  PromoCode: 'PromoCode',
+  CartItem: 'CartItem',
   Account: 'Account',
   Session: 'Session'
 } as const
@@ -188,6 +190,33 @@ export const WishlistScalarFieldEnum = {
 } as const
 
 export type WishlistScalarFieldEnum = (typeof WishlistScalarFieldEnum)[keyof typeof WishlistScalarFieldEnum]
+
+
+export const PromoCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  type: 'type',
+  value: 'value',
+  minOrderAmount: 'minOrderAmount',
+  maxDiscountAmount: 'maxDiscountAmount',
+  validFrom: 'validFrom',
+  validUntil: 'validUntil',
+  usageLimit: 'usageLimit',
+  usageCount: 'usageCount',
+  isActive: 'isActive',
+  description: 'description'
+} as const
+
+export type PromoCodeScalarFieldEnum = (typeof PromoCodeScalarFieldEnum)[keyof typeof PromoCodeScalarFieldEnum]
+
+
+export const CartItemScalarFieldEnum = {
+  userId: 'userId',
+  productId: 'productId',
+  quantity: 'quantity'
+} as const
+
+export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
 export const AccountScalarFieldEnum = {

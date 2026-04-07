@@ -48,6 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user.name,
           image: user.image,
           role: user.role,
+          createdAt: user.createdAt.toISOString(), // ✅ ISO строка
         };
       },
     }),
@@ -55,15 +56,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id!;
+        token.id = user.id;
         token.role = user.role;
+        token.createdAt = user.createdAt; // ✅ string
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
+      if (session.user && token.id) {
+        session.user.id = token.id;
         session.user.role = token.role as "USER" | "ADMIN";
+        session.user.createdAt = token.createdAt; // ✅ string
       }
       return session;
     },

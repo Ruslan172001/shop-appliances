@@ -17,8 +17,9 @@ import {
 } from "@/styles/components/ui/field";
 import { Input } from "@/styles/components/ui/input";
 import { useActionState } from "react";
-import { login } from "actions/auth";
+
 import Link from "next/link";
+import { login } from "@/actions/auth";
 
 export function LoginForm({
   className,

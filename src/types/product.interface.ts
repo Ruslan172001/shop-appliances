@@ -9,21 +9,21 @@ export interface IProduct {
   category: ICategory;
   rating: number;
   reviewCount: number;
-  inStock: boolean;
+  inStock?: boolean;
   quantity: number;
-  specifications?: IProductSpecifications;
-  model?: string;
-  color?: string;
-  country?: string;
+  specifications?: IProductSpecifications | null;
+  model?: string | null;
+  color?: string | null;
+  country?: string | null;
   badge?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IProductImage {
   id: string;
   url: string;
-  alt?: string;
+  alt?: string | null;
   isMain: boolean;
   order: number;
 }
@@ -73,15 +73,15 @@ export interface IProductSpecifications {
   smartControl?: boolean;
 
   // Динамические характеристики
-  [key: string]: string | number | boolean | undefined;
+  [key: string]: string | number | boolean | undefined | null;
 }
 
 export interface ICategory {
   id: string;
   name: string;
   slug: string;
-  description?: string;
-  parentId?: string;
+  description?: string | null;
+  parentId?: string | null;
   parent?: ICategory;
   children?: ICategory[];
   createdAt: Date;
