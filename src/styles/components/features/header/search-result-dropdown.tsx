@@ -9,6 +9,8 @@ interface SearchResultDropdownProps {
   results: SearchResult;
   isLoading: boolean;
   query: string;
+  activeIndex?: number;
+  dropdownId?: string;
 }
 
 export default function SearchResultDropdown({
@@ -16,36 +18,69 @@ export default function SearchResultDropdown({
   results,
   isLoading,
   query,
+  activeIndex = -1,
+  dropdownId,
 }: SearchResultDropdownProps) {
   const totalResults = results.products.length + results.categories.length;
 
   if (!isOpen) return null;
 
+  let globalIndex = 0;
+
   return (
-    <div className="absolute top-full left-0 right-0 mt-2 bg-background border rounded-lg shadow-lg z-50 max-h-[500px] overflow-y-auto">
+    <div
+      id={dropdownId}
+      role="listbox"
+      aria-label="Результаты поиска"
+      className="absolute top-full left-0 right-0 mt-2 bg-background border rounded-lg shadow-lg z-50 max-h-[500px] overflow-y-auto"
+    >
       {isLoading ? (
         <SkeletonSearchResult />
       ) : totalResults > 0 ? (
         <>
           {results.categories.length > 0 && (
             <div className="border-b">
-              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">
+              <h3 className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">
                 Категории
-              </div>
-              {results.categories.map((category) => (
-                <CategoryMiniCard key={category.id} category={category} />
-              ))}
+              </h3>
+              {results.categories.map((category) => {
+                const currentIndex = globalIndex++;
+                return (
+                  <div
+                    key={category.id}
+                    id={`search-result-${currentIndex}`}
+                    role="option"
+                    aria-selected={currentIndex === activeIndex}
+                    tabIndex={currentIndex === activeIndex ? 0 : -1}
+                    className={currentIndex === activeIndex ? "bg-accent" : ""}
+                  >
+                    <CategoryMiniCard category={category} />
+                  </div>
+                );
+              })}
             </div>
           )}
 
           {results.products.length > 0 && (
             <div>
-              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">
+              <h3 className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">
                 Товары
-              </div>
-              {results.products.map((product) => (
-                <ProductMiniCard key={product.id} product={product} />
-              ))}
+              </h3>
+              {results.products.map((product) => {
+                const currentIndex = globalIndex++;
+                return (
+                  <div
+                    key={product.id}
+                    id={`search-result-${currentIndex}`}
+                    role="option"
+                    aria-selected={currentIndex === activeIndex}
+                    tabIndex={currentIndex === activeIndex ? 0 : -1}
+                    className={currentIndex === activeIndex ? "bg-accent" : ""}
+                  >
+                    <ProductMiniCard product={product} />
+                  </div>
+                );
+              })}
             </div>
           )}
 
@@ -59,7 +94,7 @@ export default function SearchResultDropdown({
           </div>
         </>
       ) : (
-        <div className="p-4 text-center text-muted-foreground">
+        <div role="status" className="p-4 text-center text-muted-foreground">
           Ничего не найдено
         </div>
       )}

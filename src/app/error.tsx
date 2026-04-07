@@ -15,16 +15,13 @@ export default function Error({
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          // Attempt to recover by re-fetching and re-rendering the segment
-          () => unstable_retry()
-        }
-      >
-        Try again
-      </button>
+    <div
+      role="alert"
+      className="flex flex-col items-center justify-center min-h-screen p-4"
+    >
+      <h2>Произошла ошибка</h2>
+      <p>{error.message || "Что-то пошло не так"}</p>
+      <button onClick={() => unstable_retry()}>Попробовать снова</button>
     </div>
   );
 }

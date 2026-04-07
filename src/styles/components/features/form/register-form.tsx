@@ -45,10 +45,18 @@ export function RegisterForm({
                   name="name"
                   placeholder="Иван Иванов"
                   required
+                  aria-required="true"
+                  aria-describedby={
+                    state?.errors?.name ? "name-error" : undefined
+                  }
                 />
               </Field>
               {state?.errors?.name && (
-                <FieldDescription className="text-destructive">
+                <FieldDescription
+                  id="name-error"
+                  className="text-destructive"
+                  role="alert"
+                >
                   {state.errors.name[0]}
                 </FieldDescription>
               )}
@@ -60,27 +68,56 @@ export function RegisterForm({
                   name="email"
                   placeholder="m@example.com"
                   required
+                  aria-required="true"
+                  aria-describedby={
+                    state?.errors?.email ? "email-error" : undefined
+                  }
                 />
               </Field>
               {state?.errors?.email && (
-                <FieldDescription className="text-destructive">
+                <FieldDescription
+                  id="email-error"
+                  className="text-destructive"
+                  role="alert"
+                >
                   {state.errors.email[0]}
                 </FieldDescription>
               )}
               <Field>
                 <FieldLabel htmlFor="password">Пароль</FieldLabel>
-                <Input id="password" type="password" name="password" required />
-                <FieldDescription className="text-muted-foreground">
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  required
+                  aria-required="true"
+                  aria-describedby={
+                    [
+                      state?.errors?.password ? "password-error" : "",
+                      "password-hint",
+                    ]
+                      .filter(Boolean)
+                      .join(" ") || undefined
+                  }
+                />
+                <FieldDescription
+                  id="password-hint"
+                  className="text-muted-foreground"
+                >
                   Минимум 8 символов, буквы, цифры и спецсимволы
                 </FieldDescription>
               </Field>
               {state?.errors?.password && (
-                <FieldDescription className="text-destructive">
+                <FieldDescription
+                  id="password-error"
+                  className="text-destructive"
+                  role="alert"
+                >
                   {state.errors.password[0]}
                 </FieldDescription>
               )}
               {state?.message && (
-                <FieldDescription className="text-destructive">
+                <FieldDescription className="text-destructive" role="alert">
                   {state.message}
                 </FieldDescription>
               )}

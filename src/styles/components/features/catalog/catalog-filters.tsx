@@ -1,25 +1,25 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Slider } from "../../ui/slider";
 import { Separator } from "../../ui/separator";
-import { Label } from "../../ui/label";
-import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
-import { Checkbox } from "../../ui/checkbox";
+import { X } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../ui/accordion";
-import { Badge } from "../../ui/badge";
-import { X } from "lucide-react";
-
-import { StarRating } from "../../shared/star-rating";
-import { MAX_PRICE } from "@/lib/filter-utils";
 import { useCategories } from "@/hooks/use-category";
+import { MAX_PRICE } from "@/lib/filter-utils";
 import { SkeletonCatalogFilters } from "../../ui/skeleton/skeleton-catalog-filters";
+import { FilterCategorySection } from "./filter-category-section";
+import { FilterPriceSection } from "./filter-price-section";
+import { FilterRatingSection } from "./filter-rating-section";
+import { FilterAvailabilitySection } from "./filter-availability-section";
+import { ActiveFilterBadges } from "./active-filter-badges";
+
 interface CatalogFiltersProps {
   className?: string;
 }
@@ -28,6 +28,7 @@ export function CatalogFilters({ className }: CatalogFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: categories = [], isLoading } = useCategories();
+
   const [selectedCategory, setSelectedCategory] = useState<string>(
     searchParams.get("category") || "",
   );
@@ -50,10 +51,6 @@ export function CatalogFilters({ className }: CatalogFiltersProps) {
     router.push(`/catalog?${params.toString()}`);
   };
 
-  if (isLoading) {
-    return <SkeletonCatalogFilters />;
-  }
-
   const resetFilters = () => {
     setSelectedCategory("");
     setInStock(false);
@@ -61,19 +58,30 @@ export function CatalogFilters({ className }: CatalogFiltersProps) {
     setMinRating(0);
     router.push("/catalog");
   };
+
   const hasActiveFilters =
     selectedCategory ||
     priceRange[0] > 0 ||
     priceRange[1] < MAX_PRICE ||
     inStock ||
     minRating > 0;
+
+  if (isLoading) {
+    return <SkeletonCatalogFilters />;
+  }
+
   return (
     <div className={`space-y-4 ${className || ""}`}>
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Фильтры</h2>
         {hasActiveFilters && (
-          <Button variant="ghost" size="sm" onClick={resetFilters}>
-            <X className="mr-2 h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={resetFilters}
+            aria-label="Сбросить все фильтры"
+          >
+            <X className="mr-2 h-4 w-4" aria-hidden="true" />
             Сбросить фильтры
           </Button>
         )}
@@ -86,137 +94,38 @@ export function CatalogFilters({ className }: CatalogFiltersProps) {
         <AccordionItem value="category">
           <AccordionTrigger>Категория</AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-2 max-h-80 overflow-y-auto pr-3 min-w-50 overflow-hidden">
-              {categories.map((category) => (
-                <div key={category.id} className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id={category.id}
-                      checked={selectedCategory === category.id}
-                      onCheckedChange={(checked) => {
-                        setSelectedCategory(checked ? category.id : "");
-                      }}
-                    />
-                    <Label
-                      className="text-sm font-normal cursor-pointer wrap-break-word"
-                      htmlFor={category.id}
-                    >
-                      {category.name}{" "}
-                    </Label>
-                  </div>
-                  {category.children?.map((child) => (
-                    <div key={child.id} className="ml-4">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id={child.id}
-                          checked={selectedCategory === child.id}
-                          onCheckedChange={(checked) => {
-                            setSelectedCategory(checked ? child.id : "");
-                          }}
-                        />
-                        <Label htmlFor={child.id}>{child.name}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
+            <FilterCategorySection
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="price">
           <AccordionTrigger>Цена</AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4">
-              <Slider
-                value={priceRange}
-                min={0}
-                max={MAX_PRICE}
-                step={100}
-                onValueChange={(value) =>
-                  setPriceRange(value as [number, number])
-                }
-                className="mt-2"
-              />
-              <div className="flex items-center gap-2">
-                <div className="space-y-1 flex-1">
-                  <Label>От</Label>
-                  <Input
-                    type="number"
-                    value={priceRange[0]}
-                    onChange={(e) =>
-                      setPriceRange([
-                        parseInt(e.target.value) || 0,
-                        priceRange[1],
-                      ])
-                    }
-                    className="h-8"
-                  />
-                </div>
-                <div className="space-y-1 flex-1">
-                  <Label>До</Label>
-                  <Input
-                    type="number"
-                    value={priceRange[1]}
-                    onChange={(e) =>
-                      setPriceRange([
-                        priceRange[0],
-                        parseInt(e.target.value) || MAX_PRICE,
-                      ])
-                    }
-                    className="h-8"
-                  />
-                </div>
-              </div>
-              <div className="text-sm text-muted-foreground text-center">
-                {priceRange[0].toLocaleString()}-
-                {priceRange[1].toLocaleString()} ₽
-              </div>
-            </div>
+            <FilterPriceSection
+              priceRange={priceRange}
+              onPriceChange={setPriceRange}
+            />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="rating">
-          <AccordionTrigger>Рейтинг</AccordionTrigger>
+          <AccordionTrigger>Рейтинг</AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-2">
-              {[4, 3, 2, 1].map((rating) => (
-                <div key={rating} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`rating-${rating}`}
-                    checked={minRating === rating}
-                    onCheckedChange={(checked) => {
-                      setMinRating(checked ? rating : 0);
-                    }}
-                  />
-                  <Label
-                    htmlFor={`rating-${rating}`}
-                    className="text-sm font-normal cursor-pointer flex items-center gap-1"
-                  >
-                    <StarRating rating={rating} size="sm" />
-                    <span className="text-muted-foreground">
-                      {rating} и выше
-                    </span>
-                  </Label>
-                </div>
-              ))}
-            </div>
+            <FilterRatingSection
+              minRating={minRating}
+              onRatingChange={setMinRating}
+            />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="availability">
           <AccordionTrigger>Наличие</AccordionTrigger>
           <AccordionContent>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="inStock"
-                checked={inStock}
-                onCheckedChange={(checked) => setInStock(checked as boolean)}
-              />
-              <Label
-                htmlFor="inStock"
-                className="text-sm font-normal cursor-pointer"
-              >
-                Только в наличии
-              </Label>
-            </div>
+            <FilterAvailabilitySection
+              inStock={inStock}
+              onStockChange={setInStock}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -225,36 +134,17 @@ export function CatalogFilters({ className }: CatalogFiltersProps) {
         Применить
       </Button>
       {hasActiveFilters && (
-        <div className="flex flex-wrap gap-1">
-          {selectedCategory && (
-            <Badge className="gap-1" variant="secondary">
-              {categories.find((category) => category.id === selectedCategory)
-                ?.name || "Категория"}
-              <X className="h-4 w-4" onClick={() => setSelectedCategory("")} />
-            </Badge>
-          )}
-          {(priceRange[0] > 0 || priceRange[1] < MAX_PRICE) && (
-            <Badge variant="secondary" className="gap-1">
-              Цена: {priceRange[0]}-{priceRange[1]} ₽
-              <X
-                className="h-4 w-4"
-                onClick={() => setPriceRange([0, MAX_PRICE])}
-              />
-            </Badge>
-          )}
-          {inStock && (
-            <Badge variant="secondary" className="gap-1">
-              В наличии
-              <X className="h-4 w-4" onClick={() => setInStock(false)} />
-            </Badge>
-          )}
-          {minRating > 0 && (
-            <Badge variant="secondary" className="gap-1">
-              Рейтинг:{minRating} и выше
-              <X className="h-4 w-4" onClick={() => setMinRating(0)} />
-            </Badge>
-          )}
-        </div>
+        <ActiveFilterBadges
+          selectedCategory={selectedCategory}
+          priceRange={priceRange}
+          inStock={inStock}
+          minRating={minRating}
+          categories={categories}
+          onClearCategory={() => setSelectedCategory("")}
+          onClearPrice={() => setPriceRange([0, MAX_PRICE])}
+          onClearStock={() => setInStock(false)}
+          onClearRating={() => setMinRating(0)}
+        />
       )}
     </div>
   );

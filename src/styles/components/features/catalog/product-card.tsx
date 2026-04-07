@@ -75,6 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Link
         href={`/product/${product.slug}`}
         className="relative block aspect-square overflow-hidden bg-gray-100"
+        aria-label={product.name}
       >
         {mainImage ? (
           <Image
@@ -85,19 +86,26 @@ export default function ProductCard({ product }: ProductCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
         ) : (
-          <div className="flex items-center justify-center h-full text-gray-400">
+          <div
+            className="flex items-center justify-center h-full text-gray-400"
+            role="img"
+            aria-label="Изображение отсутствует"
+          >
             Нет фото
           </div>
         )}
 
         {discount > 0 && (
           <Badge className="absolute top-2 left-2 bg-red-500">
-            -{discount}%
+            <span className="sr-only">Скидка: </span>-{discount}%
           </Badge>
         )}
 
-        {!isInStock && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+        {!inStock && (
+          <div
+            className="absolute inset-0 bg-black/50 flex items-center justify-center"
+            aria-hidden="true"
+          >
             <span className="text-white font-semibold">Нет в наличии</span>
           </div>
         )}
@@ -141,8 +149,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             disabled={!inStock}
             onClick={handleToCart}
             size="sm"
+            aria-label={
+              inStock
+                ? `Добавить ${product.name} в корзину`
+                : "Товар отсутствует в наличии"
+            }
           >
-            <ShoppingCart className="h-4 w-4" />В корзину
+            <ShoppingCart className="h-4 w-4" aria-hidden="true" />В корзину
           </Button>
 
           <Button
@@ -150,8 +163,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             onClick={handleToggleWishlist}
             size="sm"
             variant="ghost"
+            aria-label="Добавить в избранное"
           >
-            <Heart className="h-4 w-4" />
+            <Heart className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </CardFooter>
