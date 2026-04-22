@@ -3,19 +3,9 @@
 import { Button } from "../../ui/button";
 import { StarRating } from "../../shared/star-rating";
 import { Trash2 } from "lucide-react";
-
+import type { IReview } from "types";
 interface ReviewCardProps {
-  review: {
-    id: string;
-    rating: number;
-    comment: string | null;
-    userId: string;
-    user: {
-      id: string;
-      name: string | null;
-    };
-    createdAt: Date;
-  };
+  review: IReview;
   isOwner: boolean;
   onDelete: (reviewId: string) => void;
 }
@@ -25,9 +15,7 @@ export function ReviewCard({ review, isOwner, onDelete }: ReviewCardProps) {
     <div className="border rounded-lg p-4 space-y-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-medium">
-            {review.user.name || "Аноним"}
-          </span>
+          <span className="font-medium">{review.user.name || "Аноним"}</span>
           <StarRating rating={review.rating} size="sm" />
         </div>
         <div className="flex items-center gap-2">

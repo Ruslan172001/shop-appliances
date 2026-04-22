@@ -7,8 +7,8 @@ export interface IProduct {
   oldPrice?: number;
   images: IProductImage[];
   category: ICategory;
-  rating: number;
-  reviewCount: number;
+  rating?: number;
+  reviewCount?: number;
   inStock?: boolean;
   quantity: number;
   specifications?: IProductSpecifications | null;
@@ -19,7 +19,19 @@ export interface IProduct {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
+export interface IProductCardData {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  price: number;
+  oldPrice?: number;
+  images: IProductImage[];
+  category: ICategory;
+  rating?: number;
+  reviewCount?: number;
+  quantity: number;
+}
 export interface IProductImage {
   id: string;
   url: string;
@@ -82,6 +94,7 @@ export interface ICategory {
   slug: string;
   description?: string | null;
   parentId?: string | null;
+  productCount?: number;
   parent?: ICategory;
   children?: ICategory[];
   createdAt: Date;

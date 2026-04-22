@@ -15,10 +15,10 @@ import {
   isInStock,
 } from "@/styles/lib/product-utils";
 import { StarRating } from "../../shared/star-rating";
-import { IProduct } from "@/types";
+import { IProductCardData } from "@/types";
 
 interface ProductCardProps {
-  product: IProduct;
+  product: IProductCardData;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -74,6 +74,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Card className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
       <Link
         href={`/product/${product.slug}`}
+        target="_blank"
         className="relative block aspect-square overflow-hidden bg-gray-100"
         aria-label={product.name}
       >
@@ -112,7 +113,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       <CardContent className="flex-1 p-4">
-        <Link href={`/product/${product.slug}`}>
+        <Link href={`/product/${product.slug}`} target="_blank">
           <h3 className="font-medium text-lg line-clamp-2 hover:text-primary transition-colors">
             {product.name}
           </h3>
@@ -122,7 +123,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.description}
         </p>
 
-        {product.rating > 0 && (
+        {product.rating && product.rating > 0 && (
           <div className="flex items-center gap-1 mt-2">
             <StarRating rating={product.rating} size="sm" />
             <span className="text-xs text-muted-foreground">

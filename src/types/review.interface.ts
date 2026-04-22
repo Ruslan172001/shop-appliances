@@ -1,13 +1,16 @@
 export interface IReview {
   id: string;
   rating: number;
-  comment?: string;
+  comment?: string | null;
   userId: string;
-  userName?: string;
-  userImage?: string;
+  user: {
+    id: string;
+    name: string | null;
+    image?: string | null;
+  };
   productId: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface IReviewWithProduct extends IReview {

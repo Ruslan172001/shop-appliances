@@ -36,7 +36,7 @@ export function ProductTitleSection({ product }: ProductTitleSectionProps) {
           {inStock ? "В наличии" : "Нет в наличии"}
         </Badge>
       </div>
-      {product.rating > 0 && (
+      {product.rating && product.rating > 0 && (
         <div className="flex items-center gap-2 mt-2">
           <StarRating rating={product.rating} size="sm" />
           <span className="text-sm text-gray-500">

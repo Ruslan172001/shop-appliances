@@ -4,12 +4,8 @@ import { Package } from "lucide-react";
 import Link from "next/link";
 import { OrderCard } from "./order-card";
 import { useUserOrders } from "@/hooks/use-user-orders";
-import { IOrder, IOrderItem } from "@/types";
+import { OrderWithItems } from "@/types";
 import { SkeletonOrder } from "../../ui/skeleton/skeleton-order";
-
-interface OrderWithItems extends IOrder {
-  items: IOrderItem[];
-}
 
 export function OrderList() {
   const { data: orders = [], isLoading } = useUserOrders();

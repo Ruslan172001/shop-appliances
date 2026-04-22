@@ -7,22 +7,11 @@ import { deleteReview } from "@/actions/review";
 import { ReviewSummary } from "./review-summary";
 import { ReviewForm } from "./review-form";
 import { ReviewList } from "./review-list";
-
-interface ReviewWithUser {
-  id: string;
-  rating: number;
-  comment: string | null;
-  userId: string;
-  user: {
-    id: string;
-    name: string | null;
-  };
-  createdAt: Date;
-}
+import type { IReview } from "@/types";
 
 interface ProductReviewsProps {
   productId: string;
-  reviews: ReviewWithUser[];
+  reviews: IReview[];
   averageRating: number;
   totalReviews: number;
 }

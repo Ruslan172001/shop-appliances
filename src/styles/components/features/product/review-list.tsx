@@ -1,21 +1,15 @@
 "use client";
 
 import { ReviewCard } from "./review-card";
-
-interface ReviewWithUser {
-  id: string;
-  rating: number;
-  comment: string | null;
-  userId: string;
+import type { IReview } from "@/types";
+export interface IReviewWithUser extends IReview {
   user: {
     id: string;
     name: string | null;
   };
-  createdAt: Date;
 }
-
 interface ReviewListProps {
-  reviews: ReviewWithUser[];
+  reviews: IReviewWithUser[];
   currentUserId?: string;
   onDelete: (reviewId: string) => void;
 }

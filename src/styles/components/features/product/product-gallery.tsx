@@ -3,15 +3,9 @@ import Image from "next/image";
 import { cn } from "@/styles/lib/utils";
 import { useState } from "react";
 
-interface ProductImage {
-  id: string;
-  url: string;
-  alt: string | null;
-  isMain: boolean;
-  order: number;
-}
+import type { IProductImage } from "@/types";
 interface ProductGalleryProps {
-  images: ProductImage[];
+  images: IProductImage[];
 }
 
 export default function ProductGallery({ images }: ProductGalleryProps) {

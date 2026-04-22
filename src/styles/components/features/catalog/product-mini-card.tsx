@@ -3,32 +3,11 @@ import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
 import { useAddToCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
-import { getMainImage, isInStock } from "@/styles/lib/product-utils";
+import { getMainImage } from "@/styles/lib/product-utils";
+import type { IProduct } from "@/types";
 
-interface ProductImage {
-  id: string;
-  url: string;
-  alt: string | null;
-  isMain: boolean;
-  order: number;
-}
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-}
-interface Product {
-  quantity: number;
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-  oldPrice?: number | null;
-  images: ProductImage[];
-  category: Category;
-}
 interface ProductMiniCardProps {
-  product: Product;
+  product: IProduct;
 }
 
 export default function ProductMiniCard({ product }: ProductMiniCardProps) {

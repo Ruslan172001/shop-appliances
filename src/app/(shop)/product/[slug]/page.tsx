@@ -41,6 +41,7 @@ export default async function ProductPage({ params }: PageProps) {
   const category: ICategory = {
     ...product.category,
     description: product.category.description ?? undefined,
+    productCount: 0,
   };
 
   // ✅ Преобразуем specifications

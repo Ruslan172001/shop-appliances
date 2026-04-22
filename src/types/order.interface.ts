@@ -21,12 +21,28 @@ export interface IOrder {
   createdAt: Date;
   updatedAt: Date;
 }
-
+export interface IOrderDetails {
+  id: string;
+  user: { name: string | null; email: string | null };
+  email: string;
+  phone: string;
+  address: string;
+  total: number;
+  status: OrderStatus;
+  createdAt: Date;
+  paidAt: Date | null;
+  items: IOrderItem[];
+  comment?: string | null;
+  paymentMethod?: string;
+}
+export interface OrderWithItems extends IOrder {
+  items: IOrderItem[];
+}
 export interface IOrderItem {
   id: string;
   productId: string;
   name: string;
-  image?: string;
+  image?: string | null;
   price: number;
   quantity: number;
 }
