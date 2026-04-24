@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/styles/components/ui/badge";
 import { Button } from "@/styles/components/ui/button";
 import Link from "next/link";
-import { formatDate } from "@/styles/lib/user-utils";
+import { formatDate } from "@/lib/user-utils";
 
 interface PageProps {
   params: Promise<{ id: string }>;

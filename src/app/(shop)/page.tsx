@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Button } from "@/styles/components/ui/button";
 import type { IProduct, ICategory, IProductImage } from "@/types";
 import Advantages from "@/styles/components/layout/advantages";
+import { HomepagePromo } from "@/styles/components/features/home-page-promo";
 
 // --- Типы данных из Prisma ---
 type RawProduct = Awaited<ReturnType<typeof getPopularProducts>>[number];
@@ -109,6 +110,7 @@ export default async function HomePage() {
       {/* 1. Hero Секция (Баннер) */}
       <Hero />
       <Advantages />
+      <HomepagePromo />
       <div className="container mx-auto py-12 space-y-16">
         {/* 2. Секция: Популярные товары */}
         {popular.length > 0 && (

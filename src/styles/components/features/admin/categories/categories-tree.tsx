@@ -11,7 +11,7 @@ import {
   FolderOpen,
   Folder,
 } from "lucide-react";
-import { cn } from "@/styles/lib/utils";
+import { cn } from "@/lib/utils";
 import type { ICategory } from "@/types";
 
 interface CategoriesTreeProps {

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
 import { useAddToCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
-import { getMainImage } from "@/styles/lib/product-utils";
+import { getMainImage } from "@/lib/product-utils";
 import type { IProduct } from "@/types";
 
 interface ProductMiniCardProps {

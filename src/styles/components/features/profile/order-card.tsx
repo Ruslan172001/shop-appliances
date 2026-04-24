@@ -7,8 +7,8 @@ import { Separator } from "../../ui/separator";
 import { Calendar, CreditCard, Package, ArrowRight, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDate } from "@/styles/lib/user-utils";
-import { formatPrice } from "@/styles/lib/user-utils";
+import { formatDate } from "@/lib/user-utils";
+import { formatPrice } from "@/lib/user-utils";
 import type { IOrder, IOrderItem } from "types";
 import { orderStatusLabels, orderStatusColors } from "@/lib/order-status";
 interface OrderCardProps {

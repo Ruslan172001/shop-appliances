@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { cn } from "@/styles/lib/utils";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 import type { IProductImage } from "@/types";

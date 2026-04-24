@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "../../ui/card";
 import { StarRating } from "../../shared/star-rating";
-import { formatDate } from "@/styles/lib/user-utils";
+import { formatDate } from "@/lib/user-utils";
 import Link from "next/link";
 import { IReviewWithProduct } from "@/types";
 

@@ -9,7 +9,7 @@ import {
   useWishlist,
 } from "@/hooks/use-wishlist";
 import { toast } from "sonner";
-import { isInStock } from "@/styles/lib/product-utils";
+import { isInStock } from "@/lib/product-utils";
 import type { IProduct } from "types";
 
 interface ProductActionsProps {

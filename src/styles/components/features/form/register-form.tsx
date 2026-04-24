@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/styles/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/styles/components/ui/button";
 import {
   Card,

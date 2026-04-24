@@ -31,7 +31,7 @@ import {
   Copy,
 } from "lucide-react";
 import { orderStatusColors, orderStatusLabels } from "@/lib/order-status";
-import { formatPrice, formatDate } from "@/styles/lib/user-utils";
+import { formatPrice, formatDate } from "@/lib/user-utils";
 import type { IOrderDetails, OrderStatus } from "@/types";
 import { toast } from "sonner";
 import type { IOrderItem } from "@/types";

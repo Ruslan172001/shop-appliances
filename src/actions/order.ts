@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { checkoutSchema } from "@/styles/lib/validators/order.schema";
+import { checkoutSchema } from "@/lib/validators/order.schema";
 import { createYooKassaPayment } from "./pay-yookassa";
 import {
   checkCartItems,

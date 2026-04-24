@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Separator } from "../../ui/separator";
 import { Mail, Calendar } from "lucide-react";
 import type { Session } from "next-auth";
-import { getInitials, formatDate } from "@/styles/lib/user-utils";
+import { getInitials, formatDate } from "@/lib/user-utils";
 import { EditProfileDialog } from "./edit-profile-dialog";
 
 interface ProfileInfoProps {

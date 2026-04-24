@@ -13,7 +13,7 @@ import {
   calculateDiscountPercent,
   getMainImage,
   isInStock,
-} from "@/styles/lib/product-utils";
+} from "@/lib/product-utils";
 import { StarRating } from "../../shared/star-rating";
 import { IProductCardData } from "@/types";
 

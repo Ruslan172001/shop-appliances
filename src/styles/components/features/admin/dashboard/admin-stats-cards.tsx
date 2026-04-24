@@ -13,7 +13,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/styles/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface StatCardData {
   title: string;

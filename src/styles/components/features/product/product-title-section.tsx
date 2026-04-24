@@ -1,9 +1,6 @@
 import { Badge } from "../../ui/badge";
 import { StarRating } from "../../shared/star-rating";
-import {
-  calculateDiscountPercent,
-  isInStock,
-} from "@/styles/lib/product-utils";
+import { calculateDiscountPercent, isInStock } from "@/lib/product-utils";
 import type { IProduct } from "types";
 
 interface ProductTitleSectionProps {

@@ -1,11 +1,10 @@
 import { ArrowRight, Tag, Zap } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
   return (
     <section
-      className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white overflow-hidden"
+      className="relative bg-linear-to-br from-blue-900 via-blue-800 to-blue-700 text-white overflow-hidden"
       style={{ minHeight: 480 }}
     >
       <div

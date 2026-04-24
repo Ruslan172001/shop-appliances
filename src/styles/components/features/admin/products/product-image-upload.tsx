@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Image from "next/image";
-import { cn } from "@/styles/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/styles/components/ui/button";
 import { Upload, X } from "lucide-react";
 
