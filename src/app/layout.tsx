@@ -5,7 +5,6 @@ import Header from "@/styles/components/layout/header";
 import AuthProvider from "@/styles/components/providers/auth-provider";
 import { Toaster } from "@/styles/components/ui/sonner";
 import { QueryProvider } from "@/styles/components/providers/query-provider";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin", "cyrillic"],

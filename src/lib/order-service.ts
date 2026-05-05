@@ -1,6 +1,6 @@
-import prisma from "@/lib/prisma";
+import prisma from "./prisma";
 
-interface CartItemWithProduct {
+export interface CartItemWithProduct {
   productId: string;
   quantity: number;
   product: {

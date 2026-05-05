@@ -57,6 +57,7 @@ export function formatPrice(price: number): string {
     style: "currency",
     currency: "RUB",
     minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   });
 }
 
@@ -78,7 +79,9 @@ export function truncate(text: string, maxLength: number): string {
  */
 export function getInitials(name: string): string {
   return name
-    .split(" ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase())
     .slice(0, 2)
     .join("");

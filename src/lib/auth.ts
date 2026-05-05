@@ -48,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user.name,
           image: user.image,
           role: user.role,
-          createdAt: user.createdAt.toISOString(), // ✅ ISO строка
+          createdAt: user.createdAt.toISOString(),
         };
       },
     }),
@@ -58,7 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = user.role;
-        token.createdAt = user.createdAt; // ✅ string
+        token.createdAt = user.createdAt;
       }
       return token;
     },
@@ -66,7 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user && token.id) {
         session.user.id = token.id;
         session.user.role = token.role as "USER" | "ADMIN";
-        session.user.createdAt = token.createdAt; // ✅ string
+        session.user.createdAt = token.createdAt;
       }
       return session;
     },

@@ -1,4 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Проект: Магазин бытовой техники
+Стек технологий:
+React
+TypeSrcipt
+TanStack Query
+Zustand
+Zod
+ShadCN
+TailwindCSS
+NextJS
+Prisma
+PostgreSQL
+
+В данном проекте были реализованы:
+-Авторизация и регистрация
+-Роли(ADMIN,USER)
+-Фильтрация,сортировка,пагинация
+-Список желаемого и корзина
+-Профиль пользователя
+-Оплата товаров по YOOKASSA
+-Отзывы на товар
+-Админ панель со статистикой и CRUD операциями
+Главная страница
+![alt text](./public/project-img/image.png)
+Каталог
+![alt text](./public/project-img/image-1.png)
+Страница с товаром
+![alt text](./public/project-img/image-2.png)
+Drawer с избранными товарами
+![alt text](./public/project-img/image-3.png)
+Страница корзины
+![alt text](./public/project-img/image-4.png)
+Страница оформления заказа
+![alt text](./public/project-img/image-5.png)
+Страница профиля
+![alt text](./public/project-img/image-6.png)
+Страница профиля с заказами
+![alt text](./public/project-img/image-7.png)
+Страница профиля с отзывами
+![alt text](./public/project-img/image-8.png)
+Админ панель
+![alt text](./public/project-img/image-9.png)
+Админ панель(Заказы)
+![alt text](./public/project-img/image-10.png)
+Админ панель(Товары)
+![alt text](./public/project-img/image-11.png)
+Админ панель(Отзывы)
+![alt text](./public/project-img/image-12.png)
+Админ панель(Промокоды)
+![alt text](./public/project-img/image-13.png)
+Админ панель(Категории)
+![alt text](./public/project-img/image-14.png)
+
+- This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
